@@ -1,0 +1,9 @@
+bin/
+*.test
+*.out
+*.prof
+vendor/
+.env
+*.pem
+*.key
+*.crt
