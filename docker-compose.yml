@@ -1,0 +1,34 @@
+version: "3.9"
+
+services:
+  gobalancer:
+    build: .
+    ports:
+      - "8080:8080"
+      - "9001:9001"
+    depends_on:
+      - backend1
+      - backend2
+      - backend3
+    environment:
+      - GOBALANCER_SERVER_ADDR=:8080
+    volumes:
+      - ./config/config.yaml:/config/config.yaml:ro
+
+  backend1:
+    image: hashicorp/http-echo:latest
+    command: ["-text=backend-1", "-listen=:8081"]
+    ports:
+      - "8081:8081"
+
+  backend2:
+    image: hashicorp/http-echo:latest
+    command: ["-text=backend-2", "-listen=:8082"]
+    ports:
+      - "8082:8082"
+
+  backend3:
+    image: hashicorp/http-echo:latest
+    command: ["-text=backend-3", "-listen=:8083"]
+    ports:
+      - "8083:8083"
